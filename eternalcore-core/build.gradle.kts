@@ -93,4 +93,8 @@ eternalShadow {
     // metrics
     library("org.bstats:bstats-bukkit:${Versions.BSTATS}")
     libraryRelocate("org.bstats")
+
+    // :DDDDD
+    library("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
+    libraryRelocate("com.github.benmanes.caffeine");
 }
