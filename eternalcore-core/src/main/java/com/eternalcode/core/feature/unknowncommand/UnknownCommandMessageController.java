@@ -41,10 +41,6 @@ class UnknownCommandMessageController implements Listener {
             return;
         }
 
-        if (!this.config.chat.replaceStandardHelpMessage) {
-            return;
-        }
-
         if (player.hasPermission("eternalcore.commandblocker.bypass")) {
             return;
         }

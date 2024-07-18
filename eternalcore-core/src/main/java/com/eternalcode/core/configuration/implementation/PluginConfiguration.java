@@ -3,18 +3,11 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.delay.DelaySettings;
-import com.eternalcode.core.feature.afk.AfkSettings;
-import com.eternalcode.core.feature.automessage.AutoMessageSettings;
-import com.eternalcode.core.feature.chat.ChatSettings;
-import com.eternalcode.core.feature.jail.JailSettings;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -126,60 +119,6 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
-    @Description({ "", "# Random Teleport Section" })
-    public RandomTeleport randomTeleport = new RandomTeleport();
-
-    @Contextual
-    public static class RandomTeleport implements RandomTeleportSettings, DelaySettings {
-        @Description({
-            "# Type of random teleportation,",
-            "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
-            "# STATIC_RADIUS - radius based on the manually value."
-        })
-        public RandomTeleportType randomTeleportType = RandomTeleportType.WORLD_BORDER_RADIUS;
-
-        @Description({
-            "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
-            "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
-            "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
-        })
-        public int randomTeleportRadius = 1000;
-
-        @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
-        public String randomTeleportWorld = "world";
-
-        @Description("# Number of attempts to teleport to a random location")
-        public int randomTeleportAttempts = 10;
-
-        @Override
-        public int randomTeleportRadius() {
-            return this.randomTeleportRadius;
-        }
-
-        @Override
-        public RandomTeleportType randomTeleportType() {
-            return this.randomTeleportType;
-        }
-
-        @Override
-        public String randomTeleportWorld() {
-            return this.randomTeleportWorld;
-        }
-
-        @Override
-        public int randomTeleportAttempts() {
-            return this.randomTeleportAttempts;
-        }
-
-        @Description("# Delay to request next random teleportation")
-        public Duration randomTeleportDelay = Duration.ofSeconds(60);
-
-        @Override
-        public Duration delay() {
-            return this.randomTeleportDelay;
-        }
-    }
-
     @Description({ " ", "# Homes Section" })
     public Homes homes = new Homes();
 
@@ -226,55 +165,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
-    @Description({ " ", "# Chat Section" })
-    public Chat chat = new Chat();
-
-    @Contextual
-    public static class Chat implements ChatSettings {
-
-        @Description({ " ", "# Custom message for unknown command" })
-        public boolean replaceStandardHelpMessage = false;
-
-        @Description({ " ", "# Chat delay to send next message in chat" })
-        public Duration chatDelay = Duration.ofSeconds(5);
-
-        @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
-        public int linesToClear = 128;
-
-        @Description({ " ", "# Chat should be enabled?" })
-        public boolean chatEnabled = true;
-
-        @Override
-        @Exclude
-        public boolean isChatEnabled() {
-            return this.chatEnabled;
-        }
-
-        @Override
-        @Exclude
-        public void setChatEnabled(boolean chatEnabled) {
-            this.chatEnabled = chatEnabled;
-        }
-
-        @Override
-        @Exclude
-        public Duration getChatDelay() {
-            return this.chatDelay;
-        }
-
-        @Override
-        @Exclude
-        public void setChatDelay(Duration chatDelay) {
-            this.chatDelay = chatDelay;
-        }
-
-        @Override
-        public int linesToClear() {
-            return this.linesToClear;
-        }
-
-    }
-
     @Description({ " ", "# HelpOp Section" })
     public HelpOp helpOp = new HelpOp();
 
@@ -311,54 +201,6 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Format {
         public String separator = "&7, ";
-    }
-
-    @Description({ " ", "# AFK Section" })
-    public Afk afk = new Afk();
-
-    @Contextual
-    public static class Afk implements AfkSettings {
-        @Description({
-            "# Number of interactions a player must make to have AFK status removed",
-            "# This is for so that stupid miss-click doesn't disable AFK status"
-        })
-        public int interactionsCountDisableAfk = 20;
-
-        @Description({ " ", "# Time before using the /afk command again" })
-        public Duration afkCommandDelay = Duration.ofSeconds(60);
-
-        @Description({
-            "# Should a player be marked as AFK automatically?",
-            "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
-            "# If set to false, the player will have to use the /afk command to be marked as AFK"
-        })
-        public boolean autoAfk = true;
-
-        @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
-        public Duration afkInactivityTime = Duration.ofMinutes(10);
-
-        @Description({ " ", "# Should a player be kicked from the game when marked as AFK?" })
-        public boolean kickOnAfk = false;
-
-        @Override
-        public boolean autoAfk() {
-            return this.autoAfk;
-        }
-
-        @Override
-        public int interactionsCountDisableAfk() {
-            return this.interactionsCountDisableAfk;
-        }
-
-        @Override
-        public Duration getAfkDelay() {
-            return this.afkCommandDelay;
-        }
-
-        @Override
-        public Duration getAfkInactivityTime() {
-            return this.afkInactivityTime;
-        }
     }
 
     @Description({ " ", "# Items" })
@@ -407,62 +249,6 @@ public class PluginConfiguration implements ReloadableConfig {
     public static class Butcher {
         @Description("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
         public int safeChunkNumber = 5;
-    }
-
-    @Description({ " ", "# AutoMessage Section" })
-    public AutoMessage autoMessage = new AutoMessage();
-
-    @Contextual
-    public static class AutoMessage implements AutoMessageSettings {
-        @Description("# AutoMessage should be enabled?")
-        public boolean enabled = true;
-
-        @Description("# Interval between messages")
-        public Duration interval = Duration.ofSeconds(60);
-
-        @Description("# Draw mode (RANDOM, SEQUENTIAL)")
-        public DrawMode drawMode = DrawMode.RANDOM;
-
-        @Description("# Minimum number of players on the server to send an auto message.")
-        public int minPlayers = 3;
-
-        @Override
-        public boolean enabled() {
-            return this.enabled;
-        }
-
-        @Override
-        public Duration interval() {
-            return this.interval;
-        }
-
-        @Override
-        public DrawMode drawMode() {
-            return this.drawMode;
-        }
-    }
-
-    @Description({ " ", "# Jail Section" })
-    public Jail jail = new Jail();
-
-    @Contextual
-    public static class Jail implements JailSettings {
-
-        @Description("# Default jail duration, set if no duration is specified")
-        public Duration defaultJailDuration = Duration.ofMinutes(30);
-
-        @Description("# Allowed commands in jail")
-        public Set<String> allowedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
-
-        @Override
-        public Duration defaultJailDuration() {
-            return this.defaultJailDuration;
-        }
-
-        @Override
-        public Set<String> allowedCommands() {
-            return this.allowedCommands;
-        }
     }
 
     @Override

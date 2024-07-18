@@ -1,13 +1,7 @@
 package com.eternalcode.core;
 
-import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
-import com.eternalcode.core.feature.home.HomeService;
-import com.eternalcode.core.feature.ignore.IgnoreService;
-import com.eternalcode.core.feature.jail.JailService;
 import com.eternalcode.core.feature.language.LanguageService;
-import com.eternalcode.core.feature.privatechat.PrivateChatService;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.warp.WarpService;
@@ -22,43 +16,13 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
-    public AfkService getAfkService() {
-        return this.dependencyProvider.getDependency(AfkService.class);
-    }
-
-    @Override
     public CatboyService getCatboyService() {
         return this.dependencyProvider.getDependency(CatboyService.class);
     }
 
     @Override
-    public IgnoreService getIgnoreService() {
-        return this.dependencyProvider.getDependency(IgnoreService.class);
-    }
-
-    @Override
-    public HomeService getHomeService() {
-        return this.dependencyProvider.getDependency(HomeService.class);
-    }
-
-    @Override
-    public JailService getJailService() {
-        return this.dependencyProvider.getDependency(JailService.class);
-    }
-
-    @Override
     public LanguageService getLanguageService() {
         return this.dependencyProvider.getDependency(LanguageService.class);
-    }
-
-    @Override
-    public PrivateChatService getPrivateChatService() {
-        return this.dependencyProvider.getDependency(PrivateChatService.class);
-    }
-
-    @Override
-    public RandomTeleportService getRandomTeleportService() {
-        return this.dependencyProvider.getDependency(RandomTeleportService.class);
     }
 
     @Override
